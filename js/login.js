@@ -1,4 +1,4 @@
-/* TerraPulse Login Controller */
+/* TerraPulse Simple Login Controller */
 
 import { handleLogin } from './auth.js';
 
@@ -7,11 +7,13 @@ export function initLoginPage() {
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value;
-      const remember = document.getElementById('remember-me') ? document.getElementById('remember-me').checked : true;
+      const emailInput = document.getElementById('email');
+      const pwdInput = document.getElementById('password');
 
-      handleLogin(email, password, remember);
+      const email = emailInput ? emailInput.value.trim() : '';
+      const password = pwdInput ? pwdInput.value : '';
+
+      handleLogin(email, password, true);
     });
   }
 }

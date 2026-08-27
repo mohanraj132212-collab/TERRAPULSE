@@ -27,22 +27,22 @@
         <p class="auth-subtitle">Verify your email address via OTP to register</p>
       </div>
 
-      <form id="register-form" class="auth-form">
+      <form id="register-form" class="auth-form" autocomplete="off">
         <!-- STEP 1: Basic Information -->
         <div class="form-group">
-          <label for="full-name" class="form-label">Full Name</label>
-          <input type="text" id="full-name" class="form-input" placeholder="e.g. Mohan" required>
+          <label for="full-name" class="form-label">Name</label>
+          <input type="text" id="full-name" class="form-input" placeholder="Enter your name" required value="">
         </div>
 
         <div class="form-group">
           <label for="mobile" class="form-label">Mobile Number</label>
-          <input type="tel" id="mobile" class="form-input" placeholder="e.g. +91 98765 43210" required>
+          <input type="tel" id="mobile" class="form-input" placeholder="Enter your mobile number" required value="">
         </div>
 
         <div class="form-group">
-          <label for="email" class="form-label">Email Address</label>
+          <label for="email" class="form-label">Email</label>
           <div style="display: flex; gap: 0.5rem;">
-            <input type="email" id="email" class="form-input" placeholder="farmer@terrapulse.agri" required style="flex: 1;">
+            <input type="email" id="email" class="form-input" placeholder="Enter your email" required style="flex: 1;" value="">
             <button id="btn-send-otp" type="button" class="btn btn-secondary btn-sm" style="white-space: nowrap;">
               Send OTP
             </button>
@@ -53,7 +53,7 @@
         <div id="otp-group" class="form-group" style="display: none; background: #f0fdf4; padding: 1rem; border-radius: var(--radius-md); border: 1px solid #bbf7d0;">
           <label for="otp-input" class="form-label" style="color: #166534;">Enter 6-Digit Email OTP</label>
           <div style="display: flex; gap: 0.5rem;">
-            <input type="text" id="otp-input" class="form-input" placeholder="123456" maxlength="6" style="flex: 1; letter-spacing: 0.2em; font-weight: 800;">
+            <input type="text" id="otp-input" class="form-input" placeholder="Enter 6-digit OTP" maxlength="6" style="flex: 1; letter-spacing: 0.2em; font-weight: 800;" value="">
             <button id="btn-verify-otp" type="button" class="btn btn-primary btn-sm">
               Verify OTP
             </button>
@@ -64,12 +64,12 @@
         <div id="password-section" style="display: none;">
           <div class="form-group">
             <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" class="form-input" placeholder="••••••••">
+            <input type="password" id="password" class="form-input" placeholder="Enter your password" value="">
           </div>
 
           <div class="form-group">
             <label for="confirm-password" class="form-label">Confirm Password</label>
-            <input type="password" id="confirm-password" class="form-input" placeholder="••••••••">
+            <input type="password" id="confirm-password" class="form-input" placeholder="Confirm your password" value="">
           </div>
         </div>
 
