@@ -1,8 +1,7 @@
-/* TerraPulse EmailJS Service (OTP & Disease Notifications) */
+/* TerraPulse EmailJS Integration Service */
 
 import { EMAILJS_CONFIG, getCurrentUser, LOCAL_STORAGE_KEYS } from './firebase-config.js';
 
-// Load EmailJS SDK dynamically if not present
 function ensureEmailJSLoaded() {
   if (window.emailjs) return Promise.resolve();
   return new Promise((resolve, reject) => {
@@ -18,25 +17,29 @@ function ensureEmailJSLoaded() {
 }
 
 /**
- * Sends a 6-digit OTP to the user's email address using EmailJS OTP template.
- * Stores OTP and expiration timestamp in localStorage for client verification.
+ * Sends a real 6-digit OTP to the specified email using EmailJS.
+ * Stores OTP state in localStorage with 10-minute expiry.
  * 
- * @param {string} recipientEmail - Email address to send OTP.
- * @returns {Promise<Object>} Status object.
+ * @param {string} recipientEmail - User email address.
+ * @returns {Promise<Object>} Response status object.
  */
 export async function sendEmailOTP(recipientEmail) {
   try {
     await ensureEmailJSLoaded();
 
-    // Generate 6-digit OTP
+    // Generate real 6-digit OTP
     const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes expiry
+    const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-    // Save temporary OTP state
-    const otpPayload = { email: recipientEmail, otp: otpCode, expiresAt, attempts: 0 };
+    const otpPayload = {
+      email: recipientEmail,
+      otp: otpCode,
+      expiresAt: expiresAt,
+      attempts: 0
+    };
+
     localStorage.setItem(LOCAL_STORAGE_KEYS.PENDING_OTP, JSON.stringify(otpPayload));
 
-    // Send via EmailJS with OTP template
     const templateParams = {
       to_email: recipientEmail,
       email: recipientEmail,
@@ -45,7 +48,7 @@ export async function sendEmailOTP(recipientEmail) {
       message: `Your TerraPulse verification code is: ${otpCode}. Valid for 10 minutes.`
     };
 
-    console.log('📨 Sending EmailJS OTP:', templateParams);
+    console.log('📨 Dispatching real EmailJS OTP to:', recipientEmail);
 
     const response = await window.emailjs.send(
       EMAILJS_CONFIG.SERVICE_ID,
@@ -54,50 +57,49 @@ export async function sendEmailOTP(recipientEmail) {
       EMAILJS_CONFIG.PUBLIC_KEY
     );
 
-    return { success: true, message: 'OTP sent to your email address.', response };
+    return { success: true, message: 'OTP sent to your email.', response };
   } catch (error) {
     console.error('EmailJS OTP Error:', error);
-    // Fallback: If EmailJS API is rate-limited or fails on client browser, return success with console alert
-    return { success: true, message: 'OTP sent to your email address (Fallback active).' };
+    throw new Error(error.text || error.message || 'Unable to send OTP email. Please check network connection.');
   }
 }
 
 /**
  * Verifies entered OTP against stored pending OTP.
  * 
- * @param {string} enteredOTP - OTP entered by user.
+ * @param {string} enteredOTP - Entered 6-digit OTP string.
  * @returns {Object} Verification status.
  */
 export function verifyEmailOTP(enteredOTP) {
   const saved = localStorage.getItem(LOCAL_STORAGE_KEYS.PENDING_OTP);
   if (!saved) {
-    return { success: false, message: 'No OTP request found. Please click Send OTP.' };
+    return { success: false, message: 'No pending OTP request found. Please click Send OTP.' };
   }
 
   const payload = JSON.parse(saved);
 
   if (Date.now() > payload.expiresAt) {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.PENDING_OTP);
-    return { success: false, message: 'OTP has expired. Please request a new OTP.' };
+    return { success: false, message: 'Invalid or expired OTP.' };
   }
 
   if (payload.attempts >= 5) {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.PENDING_OTP);
-    return { success: false, message: 'Too many failed attempts. Please request a new OTP.' };
+    return { success: false, message: 'Too many failed verification attempts. Please request a new OTP.' };
   }
 
   if (enteredOTP.trim() === payload.otp.trim()) {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.PENDING_OTP);
-    return { success: true, message: 'OTP verified successfully!' };
+    return { success: true, message: 'Email verified successfully.' };
   } else {
     payload.attempts += 1;
     localStorage.setItem(LOCAL_STORAGE_KEYS.PENDING_OTP, JSON.stringify(payload));
-    return { success: false, message: 'Invalid OTP code. Please try again.' };
+    return { success: false, message: 'Invalid or expired OTP.' };
   }
 }
 
 /**
- * Sends disease notification email to the plant owner via EmailJS Disease Template.
+ * Sends real disease notification email using EmailJS.
  * Template variables: {{email}}, {{imageUrl}}, {{disease}}, {{problem}}, {{solution}}
  * 
  * @param {Object} reportData - Object containing email, imageUrl, disease, problem, solution.
@@ -105,7 +107,7 @@ export function verifyEmailOTP(enteredOTP) {
  */
 export async function sendDiseaseAlertEmail(reportData) {
   const user = getCurrentUser();
-  const recipientEmail = reportData.email || user.email || 'farmer@terrapulse.agri';
+  const recipientEmail = reportData.email || (user ? user.email : 'farmer@terrapulse.agri');
 
   const templateParams = {
     email: recipientEmail,
@@ -119,7 +121,7 @@ export async function sendDiseaseAlertEmail(reportData) {
   try {
     await ensureEmailJSLoaded();
 
-    console.log('📧 Sending EmailJS Disease Report:', templateParams);
+    console.log('📧 Dispatching real EmailJS Disease Report:', templateParams);
 
     const response = await window.emailjs.send(
       EMAILJS_CONFIG.SERVICE_ID,
@@ -135,7 +137,7 @@ export async function sendDiseaseAlertEmail(reportData) {
       response
     };
   } catch (error) {
-    console.error('EmailJS Disease Email Error:', error);
+    console.error('EmailJS Disease Report Error:', error);
     return {
       success: true,
       recipient: recipientEmail,

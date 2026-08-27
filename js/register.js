@@ -1,7 +1,8 @@
-/* TerraPulse Step-by-Step Registration & EmailJS OTP Controller */
+/* TerraPulse Real Registration & OTP Controller */
 
 import { sendEmailOTP, verifyEmailOTP } from './email-service.js';
-import { setCurrentUser, getUserAvatarInitial } from './firebase-config.js';
+import { createFirebaseAuthAccount } from './auth.js';
+import { getUserAvatarInitial } from './firebase-config.js';
 import { showToast } from './notifications.js';
 
 let isEmailOTPVerified = false;
@@ -52,32 +53,25 @@ export function initRegisterPage() {
         return;
       }
       if (!validateEmailFormat(email)) {
-        showToast('Please enter a valid email address (e.g., name@example.com).', 'error');
+        showToast('Please enter a valid email address.', 'error');
         if (emailInput) emailInput.focus();
         return;
       }
 
-      // Visual feedback: Disable button and show "Sending OTP..."
       sendOtpBtn.disabled = true;
       const originalText = sendOtpBtn.textContent;
       sendOtpBtn.textContent = 'Sending OTP...';
 
       try {
         const result = await sendEmailOTP(email);
+        showToast(result.message || 'OTP sent to your email.', 'success');
 
-        if (result.success) {
-          showToast('OTP sent to your email.', 'success');
-          if (otpGroup) otpGroup.style.display = 'block';
-          sendOtpBtn.textContent = 'Resend OTP';
-          sendOtpBtn.disabled = false;
-        } else {
-          showToast(result.message || 'Failed to send OTP. Please try again.', 'error');
-          sendOtpBtn.disabled = false;
-          sendOtpBtn.textContent = originalText;
-        }
+        if (otpGroup) otpGroup.style.display = 'block';
+        sendOtpBtn.textContent = 'Resend OTP';
+        sendOtpBtn.disabled = false;
       } catch (err) {
         console.error('Send OTP Error:', err);
-        showToast('Unable to send OTP email. Please try again.', 'error');
+        showToast(err.message || 'Unable to send OTP. Please check your network connection.', 'error');
         sendOtpBtn.disabled = false;
         sendOtpBtn.textContent = originalText;
       }
@@ -104,7 +98,7 @@ export function initRegisterPage() {
 
       if (res.success) {
         isEmailOTPVerified = true;
-        showToast('Email verified successfully!', 'success');
+        showToast('Email verified successfully.', 'success');
 
         // Unlock password section
         if (passwordSection) passwordSection.style.display = 'block';
@@ -121,7 +115,7 @@ export function initRegisterPage() {
         verifyOtpBtn.textContent = '✓ Email Verified';
         verifyOtpBtn.style.backgroundColor = '#16a34a';
       } else {
-        showToast(res.message || 'Invalid OTP code. Please try again.', 'error');
+        showToast(res.message || 'Invalid or expired OTP.', 'error');
         verifyOtpBtn.disabled = false;
         verifyOtpBtn.textContent = origText;
       }
@@ -130,7 +124,7 @@ export function initRegisterPage() {
 
   // STEP 3: Click "Create Account"
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
       if (!isEmailOTPVerified) {
@@ -149,6 +143,11 @@ export function initRegisterPage() {
         if (pwdInput) pwdInput.focus();
         return;
       }
+      if (password.length < 6) {
+        showToast('Password must be at least 6 characters long.', 'warning');
+        if (pwdInput) pwdInput.focus();
+        return;
+      }
       if (!confirmPassword) {
         showToast('Please confirm your password.', 'error');
         if (confirmPwdInput) confirmPwdInput.focus();
@@ -159,24 +158,15 @@ export function initRegisterPage() {
         return;
       }
 
-      // Visual feedback: Disable button and show "Creating Account..."
+      // Visual feedback: Disable button and show "Creating account..."
       if (createAccountBtn) {
         createAccountBtn.disabled = true;
-        createAccountBtn.textContent = 'Creating Account...';
+        createAccountBtn.textContent = 'Creating account...';
       }
 
       try {
-        const user = {
-          uid: 'usr_' + Date.now(),
-          name: fullName,
-          email: email,
-          mobile: mobile,
-          emailVerified: true,
-          createdAt: new Date().toISOString()
-        };
-
-        setCurrentUser(user);
-        const initial = getUserAvatarInitial(user);
+        const userProfile = await createFirebaseAuthAccount(fullName, mobile, email, password);
+        const avatarLetter = getUserAvatarInitial(userProfile);
 
         showToast(`Account created successfully! Welcome, ${fullName}.`, 'success');
 
@@ -184,8 +174,19 @@ export function initRegisterPage() {
           window.location.href = 'dashboard.html';
         }, 800);
       } catch (err) {
-        console.error('Account Creation Error:', err);
-        showToast('Unable to create account. Please try again.', 'error');
+        console.error('Firebase Auth Create Account Error:', err);
+
+        let userMsg = 'Unable to create account. Please try again.';
+        if (err.code === 'auth/email-already-in-use') {
+          userMsg = 'This email address is already registered. Please login.';
+        } else if (err.code === 'auth/invalid-email') {
+          userMsg = 'Invalid email address format.';
+        } else if (err.code === 'auth/weak-password') {
+          userMsg = 'Password is too weak. Please use at least 6 characters.';
+        }
+
+        showToast(userMsg, 'error');
+
         if (createAccountBtn) {
           createAccountBtn.disabled = false;
           createAccountBtn.textContent = 'Create Account';

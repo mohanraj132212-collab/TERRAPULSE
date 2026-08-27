@@ -1,4 +1,18 @@
-/* TerraPulse Centralized Service & API Configuration */
+/* TerraPulse Centralized Service & Firebase SDK Configuration */
+
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
+import { getAuth } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyAjyFgkVpzS6XNWuPYwJjyPeo_CoDsoeFMM",
+  authDomain: "terrapulse-6d259.firebaseapp.com",
+  projectId: "terrapulse-6d259",
+  storageBucket: "terrapulse-6d259.firebasestorage.app",
+  messagingSenderId: "29823308168",
+  appId: "1:29823308168:web:faf50686ccecc4705b6a3d",
+  measurementId: "G-NF5526WLG2"
+};
 
 export const EMAILJS_CONFIG = {
   SERVICE_ID: "service_zcewrhw",
@@ -13,15 +27,10 @@ export const CLOUDINARY_CONFIG = {
   UPLOAD_URL: "https://api.cloudinary.com/v1_1/u7rk5gek/image/upload"
 };
 
-export const firebaseConfig = {
-  apiKey: "AIzaSyAjyFgkVpzS6XNWuPYwJjyPeo_CoDsoeFMM",
-  authDomain: "terrapulse-6d259.firebaseapp.com",
-  projectId: "terrapulse-6d259",
-  storageBucket: "terrapulse-6d259.firebasestorage.app",
-  messagingSenderId: "29823308168",
-  appId: "1:29823308168:web:faf50686ccecc4705b6a3d",
-  measurementId: "G-NF5526WLG2"
-};
+// Initialize Firebase App instance singleton
+export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 export const LOCAL_STORAGE_KEYS = {
   USER: 'terrapulse_auth_user',
@@ -40,14 +49,7 @@ export function getCurrentUser() {
       console.error('Error parsing auth user:', e);
     }
   }
-  return {
-    uid: 'farmer_usr_99812',
-    email: 'farmer@terrapulse.agri',
-    name: 'Mohan',
-    mobile: '+91 98765 43210',
-    emailVerified: true,
-    createdAt: new Date().toISOString()
-  };
+  return null;
 }
 
 export function setCurrentUser(user) {
@@ -59,7 +61,7 @@ export function setCurrentUser(user) {
 }
 
 export function getUserAvatarInitial(user = getCurrentUser()) {
-  if (!user || !user.name) return 'M';
+  if (!user || !user.name) return 'F';
   const trimmed = user.name.trim();
-  return trimmed ? trimmed.charAt(0).toUpperCase() : 'M';
+  return trimmed ? trimmed.charAt(0).toUpperCase() : 'F';
 }
