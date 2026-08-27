@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings & Preferences — TerraPulse</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/settings.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="settings">
+
+  <div class="app-container">
+    <!-- Desktop Sidebar -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <img src="assets/logo.png" alt="TerraPulse Logo" class="sidebar-logo">
+          <span class="sidebar-title">TerraPulse</span>
+        </div>
+
+        <ul class="sidebar-nav">
+          <li><a href="dashboard.html" class="sidebar-item-link" data-page="dashboard"><span>📊</span> Dashboard</a></li>
+          <li><a href="monitoring.html" class="sidebar-item-link" data-page="monitoring"><span>📡</span> Sensor Telemetry</a></li>
+          <li><a href="camera.html" class="sidebar-item-link" data-page="camera"><span>📷</span> Scan Plant</a></li>
+          <li><a href="history.html" class="sidebar-item-link" data-page="history"><span>📜</span> Disease History</a></li>
+          <li><a href="reports.html" class="sidebar-item-link" data-page="reports"><span>📈</span> Analytics Reports</a></li>
+          <li><a href="profile.html" class="sidebar-item-link" data-page="profile"><span>👤</span> Profile</a></li>
+          <li><a href="settings.html" class="sidebar-item-link active" data-page="settings"><span>⚙️</span> Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-logout" style="width: 100%;">🚪 Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">⚙️ Settings & Preferences</h1>
+          <p class="page-subtitle">Configure application theme, email notification alerts, and crop threshold profiles.</p>
+        </div>
+      </div>
+
+      <!-- Appearance Settings -->
+      <section class="settings-group-card">
+        <h3 class="card-title">🎨 Appearance Theme</h3>
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4>Dark Mode Theme</h4>
+            <p>Switch between modern light and dark surface interface modes.</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" class="theme-toggle-input">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Alert Notification Preferences -->
+      <section class="settings-group-card">
+        <h3 class="card-title">🔔 Alert Notifications</h3>
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4>Automated Email Alerts</h4>
+            <p>Automatically dispatch email alerts whenever a foliage scan detects a plant disease.</p>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="setting-email-alerts" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Crop Specific Profiles -->
+      <section class="settings-group-card">
+        <h3 class="card-title">🌱 Crop Threshold Profile</h3>
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4>Target Crop Profile</h4>
+            <p>Select crop species to calibrate optimal environmental thresholds (Temp, Humidity, Soil pH, Moisture).</p>
+          </div>
+          <select id="setting-crop-profile" class="form-input" style="max-width: 200px;">
+            <option value="general">General Agriculture</option>
+            <option value="tomato">Solanum Lycopersicum (Tomato)</option>
+            <option value="wheat">Triticum Aestivum (Wheat)</option>
+            <option value="rice">Oryza Sativa (Rice)</option>
+            <option value="corn">Zea Mays (Corn)</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Account Actions -->
+      <section class="settings-group-card">
+        <h3 class="card-title" style="color: var(--color-status-critical-dark);">🚪 Session Actions</h3>
+        <div class="setting-row">
+          <div class="setting-info">
+            <h4>Sign Out Account</h4>
+            <p>Log out of current session on this browser.</p>
+          </div>
+          <button class="btn btn-danger btn-sm btn-logout">Sign Out</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <a href="dashboard.html" class="mobile-nav-item" data-page="dashboard"><span>📊</span> Dashboard</a>
+      <a href="monitoring.html" class="mobile-nav-item" data-page="monitoring"><span>📡</span> Sensors</a>
+      <a href="camera.html" class="mobile-nav-item" data-page="camera"><span>📷</span> Scan</a>
+      <a href="history.html" class="mobile-nav-item" data-page="history"><span>📜</span> History</a>
+      <a href="settings.html" class="mobile-nav-item active" data-page="settings"><span>⚙️</span> Settings</a>
+    </nav>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

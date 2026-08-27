@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan History — TerraPulse 🌱</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/history.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="history">
+
+  <!-- Header Banner -->
+  <header class="app-header-banner">
+    <a href="dashboard.html" class="brand-wrapper">
+      <img src="assets/logo.png" alt="TerraPulse Logo" class="brand-logo-img">
+      <span class="brand-name-text">TERRAPULSE</span>
+    </a>
+    <ul class="app-nav-links">
+      <li><a href="dashboard.html" class="app-nav-link" data-page="dashboard">HOME</a></li>
+      <li><a href="camera.html" class="app-nav-link" data-page="camera">CAMERA</a></li>
+      <li><a href="history.html" class="app-nav-link active" data-page="history">HISTORY</a></li>
+    </ul>
+    <div class="user-avatar-circle" title="Profile Avatar">M</div>
+  </header>
+
+  <!-- Main Viewport -->
+  <main style="max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+      <h1 style="font-size: 2rem; font-weight: 900; color: #000000; text-transform: uppercase;">HISTORY</h1>
+      <a href="camera.html" class="btn btn-primary btn-sm" style="background-color: #004d1a; border-radius: 9999px; padding: 0.65rem 1.5rem;">📷 New Scan</a>
+    </div>
+
+    <!-- Toolbar Search & Filters -->
+    <section class="history-toolbar" style="margin-bottom: 2rem;">
+      <input type="text" id="history-search-input" class="form-input history-search-input" placeholder="🔍 Search disease or symptom...">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-text-muted);">Filter:</span>
+        <select id="history-filter-select" class="history-filter-select">
+          <option value="all">All Scans</option>
+          <option value="none">Healthy Only</option>
+          <option value="moderate">Moderate Severity</option>
+          <option value="critical">Critical Severity</option>
+        </select>
+      </div>
+    </section>
+
+    <!-- History Cards Grid -->
+    <section id="history-cards-grid" class="history-grid">
+      <!-- Rendered dynamically via js/history.js -->
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

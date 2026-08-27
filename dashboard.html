@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — TerraPulse 🌱</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="dashboard">
+
+  <!-- Header Banner (Ref Image 3) -->
+  <header class="app-header-banner">
+    <a href="dashboard.html" class="brand-wrapper">
+      <img src="assets/logo.png" alt="TerraPulse Logo" class="brand-logo-img">
+      <span class="brand-name-text">TERRAPULSE</span>
+    </a>
+    <ul class="app-nav-links">
+      <li><a href="dashboard.html" class="app-nav-link active" data-page="dashboard">HOME</a></li>
+      <li><a href="camera.html" class="app-nav-link" data-page="camera">CAMERA</a></li>
+      <li><a href="history.html" class="app-nav-link" data-page="history">HISTORY</a></li>
+    </ul>
+    <div class="user-avatar-circle" title="Profile Avatar">M</div>
+  </header>
+
+  <!-- Main Viewport matching Reference Image 3 -->
+  <main class="dashboard-viewport">
+
+    <!-- Center Health Index Circular Gauge -->
+    <div class="health-ring-wrapper">
+      <div class="health-gauge-circle">
+        <svg viewBox="0 0 160 160">
+          <circle class="gauge-ring-bg" cx="80" cy="80" r="70" />
+          <circle id="gauge-ring-fill" class="gauge-ring-fill" cx="80" cy="80" r="70" />
+        </svg>
+        <div id="gauge-score-val" class="gauge-center-val">100%</div>
+      </div>
+      <div class="gauge-sub-label">HEALTH INDEX</div>
+    </div>
+
+    <!-- 4 Light Green Cards for Manual Parameter Entry (Ref Image 3) -->
+    <section class="manual-inputs-grid">
+      <!-- Temperature -->
+      <div class="parameter-card">
+        <div class="parameter-card-title">Temperature</div>
+        <input type="number" id="manual-input-temp" class="parameter-card-input" value="28" step="0.5" placeholder="°C">
+      </div>
+
+      <!-- Humidity -->
+      <div class="parameter-card">
+        <div class="parameter-card-title">Humidity</div>
+        <input type="number" id="manual-input-hum" class="parameter-card-input" value="67" step="1" placeholder="%">
+      </div>
+
+      <!-- pH -->
+      <div class="parameter-card">
+        <div class="parameter-card-title">pH</div>
+        <input type="number" id="manual-input-ph" class="parameter-card-input" value="6.5" step="0.1" placeholder="pH">
+      </div>
+
+      <!-- Soil Moisture -->
+      <div class="parameter-card">
+        <div class="parameter-card-title">Soil Moisture</div>
+        <input type="number" id="manual-input-moist" class="parameter-card-input" value="54" step="1" placeholder="%">
+      </div>
+    </section>
+
+    <!-- 3 Condition Badges Row (Ref Image 3) -->
+    <section class="condition-badges-row">
+      <div id="pill-good" class="condition-pill active-good">Good</div>
+      <div id="pill-bad" class="condition-pill">Bad</div>
+      <div id="pill-normal" class="condition-pill">Normal</div>
+    </section>
+
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

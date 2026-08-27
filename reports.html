@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Reports — TerraPulse</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/reports.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="reports">
+
+  <div class="app-container">
+    <!-- Desktop Sidebar -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <img src="assets/logo.png" alt="TerraPulse Logo" class="sidebar-logo">
+          <span class="sidebar-title">TerraPulse</span>
+        </div>
+
+        <ul class="sidebar-nav">
+          <li><a href="dashboard.html" class="sidebar-item-link" data-page="dashboard"><span>📊</span> Dashboard</a></li>
+          <li><a href="monitoring.html" class="sidebar-item-link" data-page="monitoring"><span>📡</span> Sensor Telemetry</a></li>
+          <li><a href="camera.html" class="sidebar-item-link" data-page="camera"><span>📷</span> Scan Plant</a></li>
+          <li><a href="history.html" class="sidebar-item-link" data-page="history"><span>📜</span> Disease History</a></li>
+          <li><a href="reports.html" class="sidebar-item-link active" data-page="reports"><span>📈</span> Analytics Reports</a></li>
+          <li><a href="profile.html" class="sidebar-item-link" data-page="profile"><span>👤</span> Profile</a></li>
+          <li><a href="settings.html" class="sidebar-item-link" data-page="settings"><span>⚙️</span> Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-logout" style="width: 100%;">🚪 Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">📈 Farm Health Analytics & Reports</h1>
+          <p class="page-subtitle">Aggregate crop diagnostics, disease prevalence, and microclimate telemetry.</p>
+        </div>
+        <div style="display: flex; gap: 0.75rem;">
+          <button id="btn-export-csv" class="btn btn-secondary btn-sm">📥 Export CSV Data</button>
+          <button id="btn-export-pdf" class="btn btn-primary btn-sm">🖨️ Print PDF Report</button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <section class="reports-stats-grid">
+        <div class="report-stat-card">
+          <div class="stat-label">Total Leaf Scans</div>
+          <div id="report-total-scans" class="stat-number">24</div>
+        </div>
+
+        <div class="report-stat-card">
+          <div class="stat-label">Healthy Plants</div>
+          <div id="report-healthy-scans" class="stat-number" style="color: var(--color-primary);">18</div>
+        </div>
+
+        <div class="report-stat-card">
+          <div class="stat-label">Diseases Detected</div>
+          <div id="report-diseased-scans" class="stat-number" style="color: var(--color-status-warning-dark);">6</div>
+        </div>
+
+        <div class="report-stat-card">
+          <div class="stat-label">Crop Health Rate</div>
+          <div id="report-healthy-rate" class="stat-number" style="color: var(--color-primary);">75%</div>
+        </div>
+      </section>
+
+      <!-- HTML5 Canvas Visualizations Grid -->
+      <section class="charts-grid">
+        <div class="chart-card">
+          <h3 class="card-title">🍩 Disease Distribution Breakdown</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Proportions of detected crop diseases</p>
+          <div class="chart-canvas-wrapper">
+            <canvas id="disease-pie-canvas" class="canvas-chart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3 class="card-title">📊 Weekly Health Index Trend</h3>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted);">Daily average plant health score (0–100)</p>
+          <div class="chart-canvas-wrapper">
+            <canvas id="trend-bar-canvas" class="canvas-chart"></canvas>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <a href="dashboard.html" class="mobile-nav-item" data-page="dashboard"><span>📊</span> Dashboard</a>
+      <a href="monitoring.html" class="mobile-nav-item" data-page="monitoring"><span>📡</span> Sensors</a>
+      <a href="camera.html" class="mobile-nav-item" data-page="camera"><span>📷</span> Scan</a>
+      <a href="history.html" class="mobile-nav-item" data-page="history"><span>📜</span> History</a>
+      <a href="settings.html" class="mobile-nav-item active" data-page="settings"><span>⚙️</span> Settings</a>
+    </nav>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

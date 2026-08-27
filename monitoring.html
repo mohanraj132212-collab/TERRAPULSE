@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensor Telemetry Monitoring — TerraPulse</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/monitoring.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="monitoring">
+
+  <div class="app-container">
+    <!-- Desktop Sidebar -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <img src="assets/logo.png" alt="TerraPulse Logo" class="sidebar-logo">
+          <span class="sidebar-title">TerraPulse</span>
+        </div>
+
+        <ul class="sidebar-nav">
+          <li><a href="dashboard.html" class="sidebar-item-link" data-page="dashboard"><span>📊</span> Dashboard</a></li>
+          <li><a href="monitoring.html" class="sidebar-item-link active" data-page="monitoring"><span>📡</span> Sensor Telemetry</a></li>
+          <li><a href="camera.html" class="sidebar-item-link" data-page="camera"><span>📷</span> Scan Plant</a></li>
+          <li><a href="history.html" class="sidebar-item-link" data-page="history"><span>📜</span> Disease History</a></li>
+          <li><a href="reports.html" class="sidebar-item-link" data-page="reports"><span>📈</span> Analytics Reports</a></li>
+          <li><a href="profile.html" class="sidebar-item-link" data-page="profile"><span>👤</span> Profile</a></li>
+          <li><a href="settings.html" class="sidebar-item-link" data-page="settings"><span>⚙️</span> Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-logout" style="width: 100%;">🚪 Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">📡 Continuous Telemetry Monitoring</h1>
+          <p class="page-subtitle">Real-time environmental microclimate telemetry and system log stream.</p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <span class="pulse-dot"></span>
+          <span id="monitoring-live-status" class="badge badge-good">🟢 MONITORING ACTIVE</span>
+        </div>
+      </div>
+
+      <!-- Monitoring Control Bar -->
+      <section class="monitoring-hero">
+        <div>
+          <h3 style="font-size: 1.2rem; font-weight: 700;">Live Sensor Stream Engine</h3>
+          <p style="font-size: 0.875rem; color: var(--color-text-secondary);">Last Telemetry Packet: <strong id="last-updated-time">Just now</strong></p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 600;">
+            <span>Simulate IoT Telemetry Stream:</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-live-stream" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Condition Simulation Buttons -->
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <button id="btn-preset-normal" class="btn btn-secondary btn-sm">🟢 Load Optimal Preset</button>
+        <button id="btn-preset-warning" class="btn btn-secondary btn-sm">🟡 Load Warning Preset</button>
+        <button id="btn-preset-critical" class="btn btn-secondary btn-sm">🔴 Load Critical Stress Preset</button>
+      </div>
+
+      <!-- Telemetry Panel Grid -->
+      <section class="monitoring-grid">
+        <div>
+          <!-- Temp Progress Card -->
+          <div class="sensor-detail-card">
+            <div class="sensor-detail-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+                <span>🌡️ Temperature</span>
+                <span id="mon-val-temp" style="font-size: 1.25rem; color: var(--color-primary);">28.4°C</span>
+              </div>
+              <span id="mon-badge-temp" class="badge badge-good">GOOD</span>
+            </div>
+            <div class="sensor-progress-track">
+              <div id="mon-fill-temp" class="sensor-progress-fill" style="width: 63%;"></div>
+            </div>
+            <div class="sensor-meta-row">
+              <span>Min: 15°C (Critical)</span>
+              <span>Ideal: 20°C – 30°C</span>
+              <span>Max: 35°C (Critical)</span>
+            </div>
+          </div>
+
+          <!-- Humidity Progress Card -->
+          <div class="sensor-detail-card">
+            <div class="sensor-detail-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+                <span>💧 Humidity</span>
+                <span id="mon-val-hum" style="font-size: 1.25rem; color: var(--color-primary);">67%</span>
+              </div>
+              <span id="mon-badge-hum" class="badge badge-good">GOOD</span>
+            </div>
+            <div class="sensor-progress-track">
+              <div id="mon-fill-hum" class="sensor-progress-fill" style="width: 67%;"></div>
+            </div>
+            <div class="sensor-meta-row">
+              <span>Min: 35% (Critical)</span>
+              <span>Ideal: 50% – 75%</span>
+              <span>Max: 85% (Critical)</span>
+            </div>
+          </div>
+
+          <!-- Soil pH Progress Card -->
+          <div class="sensor-detail-card">
+            <div class="sensor-detail-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+                <span>🧪 Soil pH</span>
+                <span id="mon-val-ph" style="font-size: 1.25rem; color: var(--color-primary);">6.5 pH</span>
+              </div>
+              <span id="mon-badge-ph" class="badge badge-good">GOOD</span>
+            </div>
+            <div class="sensor-progress-track">
+              <div id="mon-fill-ph" class="sensor-progress-fill" style="width: 46%;"></div>
+            </div>
+            <div class="sensor-meta-row">
+              <span>Min: pH 5.0 (Acidic)</span>
+              <span>Ideal: pH 5.8 – 7.0</span>
+              <span>Max: pH 7.5 (Alkaline)</span>
+            </div>
+          </div>
+
+          <!-- Soil Moisture Progress Card -->
+          <div class="sensor-detail-card">
+            <div class="sensor-detail-header">
+              <div style="display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+                <span>🌱 Soil Moisture</span>
+                <span id="mon-val-moist" style="font-size: 1.25rem; color: var(--color-primary);">54%</span>
+              </div>
+              <span id="mon-badge-moist" class="badge badge-good">GOOD</span>
+            </div>
+            <div class="sensor-progress-track">
+              <div id="mon-fill-moist" class="sensor-progress-fill" style="width: 54%;"></div>
+            </div>
+            <div class="sensor-meta-row">
+              <span>Min: 25% (Dry)</span>
+              <span>Ideal: 40% – 70%</span>
+              <span>Max: 85% (Wet)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-Time Activity Log Timeline -->
+        <div class="card" style="height: fit-content;">
+          <h3 class="card-title">📝 Telemetry Activity Feed</h3>
+          <div id="activity-timeline-list" class="activity-timeline">
+            <div class="timeline-item">
+              <div class="timeline-node"></div>
+              <div class="timeline-time">Just now</div>
+              <div class="timeline-text">System Telemetry Online. Sensor values within calibrated optimal range.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-node"></div>
+              <div class="timeline-time">2 mins ago</div>
+              <div class="timeline-text">Foliage health score evaluated at 100% (HEALTHY).</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <a href="dashboard.html" class="mobile-nav-item" data-page="dashboard"><span>📊</span> Dashboard</a>
+      <a href="monitoring.html" class="mobile-nav-item active" data-page="monitoring"><span>📡</span> Sensors</a>
+      <a href="camera.html" class="mobile-nav-item" data-page="camera"><span>📷</span> Scan</a>
+      <a href="history.html" class="mobile-nav-item" data-page="history"><span>📜</span> History</a>
+      <a href="settings.html" class="mobile-nav-item" data-page="settings"><span>⚙️</span> Settings</a>
+    </nav>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

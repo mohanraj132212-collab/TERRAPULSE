@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TerraPulse 🌱 — Smart Plant Health Monitoring</title>
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/landing.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="landing">
+
+  <!-- Header Banner (Ref Images 1 & 2) -->
+  <header class="app-header-banner">
+    <div class="brand-wrapper">
+      <img src="assets/logo.png" alt="TerraPulse Logo" class="brand-logo-img">
+      <span class="brand-name-text">TERRAPULSE</span>
+    </div>
+  </header>
+
+  <!-- Visually Fixed Hero Title - Fade Only (No Movement) -->
+  <div id="fixed-hero-title-container" class="fixed-hero-title-container">
+    <h1 class="landing-hero-title">TERRAPULSE</h1>
+  </div>
+
+  <!-- Single Continuous Viewport with Fixed Background -->
+  <div class="landing-viewport">
+    
+    <!-- Hero Spacer -->
+    <div class="landing-hero-spacer"></div>
+
+    <!-- Section 2: Auth Reveal Section (Natural Fade Reveal) -->
+    <section class="landing-auth-section">
+      <!-- Translucent Green Card Overlay -->
+      <div id="auth-card" class="auth-translucent-card">
+        <a href="login.html" class="btn-landing-login">Login</a>
+        <a href="register.html" class="btn-landing-register">Create Account</a>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="module">
+    // Fade-Only Scroll Listener Script
+    const titleContainer = document.getElementById('fixed-hero-title-container');
+    const authCard = document.getElementById('auth-card');
+
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY || window.pageYOffset;
+      const fadeThreshold = 350;
+
+      // 1. Calculate Title Opacity (Fades from 1.0 to 0.0 with zero position movement)
+      let titleOpacity = 1 - (scrollY / fadeThreshold);
+      if (titleOpacity < 0) titleOpacity = 0;
+      if (titleOpacity > 1) titleOpacity = 1;
+
+      if (titleContainer) {
+        titleContainer.style.opacity = titleOpacity.toFixed(2);
+        // Ensure element is non-interactive when invisible
+        titleContainer.style.visibility = titleOpacity <= 0 ? 'hidden' : 'visible';
+      }
+
+      // 2. Auth Card Natural Reveal Opacity
+      let cardOpacity = (scrollY - 150) / 250;
+      if (cardOpacity < 0) cardOpacity = 0;
+      if (cardOpacity > 1) cardOpacity = 1;
+
+      if (authCard) {
+        authCard.style.opacity = cardOpacity.toFixed(2);
+      }
+    });
+  </script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plant Diagnosis Result — TerraPulse</title>
+  
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/sidebar.css">
+  <link rel="stylesheet" href="css/disease.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body data-page="disease-result">
+
+  <div class="app-container">
+    <!-- Desktop Sidebar -->
+    <aside class="app-sidebar">
+      <div>
+        <div class="sidebar-header">
+          <img src="assets/logo.png" alt="TerraPulse Logo" class="sidebar-logo">
+          <span class="sidebar-title">TerraPulse</span>
+        </div>
+
+        <ul class="sidebar-nav">
+          <li><a href="dashboard.html" class="sidebar-item-link" data-page="dashboard"><span>📊</span> Dashboard</a></li>
+          <li><a href="monitoring.html" class="sidebar-item-link" data-page="monitoring"><span>📡</span> Sensor Telemetry</a></li>
+          <li><a href="camera.html" class="sidebar-item-link" data-page="camera"><span>📷</span> Scan Plant</a></li>
+          <li><a href="history.html" class="sidebar-item-link" data-page="history"><span>📜</span> Disease History</a></li>
+          <li><a href="reports.html" class="sidebar-item-link" data-page="reports"><span>📈</span> Analytics Reports</a></li>
+          <li><a href="profile.html" class="sidebar-item-link" data-page="profile"><span>👤</span> Profile</a></li>
+          <li><a href="settings.html" class="sidebar-item-link" data-page="settings"><span>⚙️</span> Settings</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-footer">
+        <button class="btn btn-secondary btn-sm btn-logout" style="width: 100%;">🚪 Sign Out</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="page-header">
+        <div>
+          <h1 class="page-title">🧪 Plant Health Diagnosis Report</h1>
+          <p class="page-subtitle">Optical foliage analysis & environmental snapshot evaluation.</p>
+        </div>
+        <a href="camera.html" class="btn btn-primary btn-sm">📷 Scan Another Leaf</a>
+      </div>
+
+      <div class="disease-result-layout">
+        <!-- Left: Leaf Image & Sensor Snapshot Card -->
+        <div>
+          <div class="captured-leaf-card">
+            <img id="result-leaf-img" src="https://images.unsplash.com/photo-1592417817098-8f3d6ef23a81?auto=format&fit=crop&w=600&q=80" alt="Captured Leaf" class="leaf-image-preview">
+            <div class="leaf-meta-body">
+              <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-text-main); margin-bottom: 0.75rem;">
+                Recorded Sensor Snapshot
+              </h4>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.85rem;">
+                <div style="background: var(--color-bg-light); padding: 0.6rem; border-radius: var(--radius-sm);">
+                  <span style="color: var(--color-text-muted);">Temp:</span> <strong id="result-env-temp">28.4°C</strong>
+                </div>
+                <div style="background: var(--color-bg-light); padding: 0.6rem; border-radius: var(--radius-sm);">
+                  <span style="color: var(--color-text-muted);">Humidity:</span> <strong id="result-env-hum">67%</strong>
+                </div>
+                <div style="background: var(--color-bg-light); padding: 0.6rem; border-radius: var(--radius-sm);">
+                  <span style="color: var(--color-text-muted);">Soil pH:</span> <strong id="result-env-ph">6.5</strong>
+                </div>
+                <div style="background: var(--color-bg-light); padding: 0.6rem; border-radius: var(--radius-sm);">
+                  <span style="color: var(--color-text-muted);">Moisture:</span> <strong id="result-env-moist">54%</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Diagnosis Details & Treatment Recommendations -->
+        <div>
+          <!-- Diagnosis Header Card -->
+          <div class="disease-main-header">
+            <div class="disease-title-badge-row">
+              <span style="font-size: 0.85rem; font-weight: 700; color: var(--color-text-muted); text-transform: uppercase;">DIAGNOSIS DETECTED</span>
+              <span id="result-severity-badge" class="badge badge-warning">Moderate</span>
+            </div>
+            <div id="result-disease-name" class="disease-name-large">Leaf Spot</div>
+
+            <div class="confidence-meter-bar">
+              <span style="font-weight: 700; font-size: 0.9rem;">Confidence:</span>
+              <div class="confidence-track">
+                <div id="result-confidence-fill" class="confidence-fill" style="width: 94%;"></div>
+              </div>
+              <span id="result-confidence-val" style="font-weight: 800; color: var(--color-primary);">94%</span>
+            </div>
+          </div>
+
+          <!-- Problem Card -->
+          <div class="diagnosis-section-card">
+            <div class="section-icon-header">
+              <span>⚠️</span> Problem Description
+            </div>
+            <p id="result-problem-text" style="font-size: 0.95rem; color: var(--color-text-secondary); line-height: 1.6;">
+              Fungal infection causing circular dark lesions on foliage. Restricted photosynthesis.
+            </p>
+          </div>
+
+          <!-- Solution Card -->
+          <div class="diagnosis-section-card">
+            <div class="section-icon-header">
+              <span>💡</span> Recommended Solution
+            </div>
+            <p id="result-solution-text" style="font-size: 0.95rem; color: var(--color-text-main); line-height: 1.6;">
+              Prune affected foliage. Apply organic copper-based fungicide spray early morning.
+            </p>
+          </div>
+
+          <!-- Prevention Card -->
+          <div class="diagnosis-section-card">
+            <div class="section-icon-header">
+              <span>🛡️</span> Prevention Guidelines
+            </div>
+            <p id="result-prevention-text" style="font-size: 0.95rem; color: var(--color-text-main); line-height: 1.6;">
+              Avoid overhead watering and ensure adequate plant canopy airflow.
+            </p>
+          </div>
+
+          <!-- Action Buttons Bar -->
+          <div class="action-buttons-group">
+            <button id="btn-save-report" class="btn btn-secondary">💾 Save Report</button>
+            <button id="btn-send-email-alert" class="btn btn-primary">📧 Send Email Alert</button>
+            <a href="camera.html" class="btn btn-outline">📷 Scan Another Leaf</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <a href="dashboard.html" class="mobile-nav-item" data-page="dashboard"><span>📊</span> Dashboard</a>
+      <a href="monitoring.html" class="mobile-nav-item" data-page="monitoring"><span>📡</span> Sensors</a>
+      <a href="camera.html" class="mobile-nav-item active" data-page="camera"><span>📷</span> Scan</a>
+      <a href="history.html" class="mobile-nav-item" data-page="history"><span>📜</span> History</a>
+      <a href="settings.html" class="mobile-nav-item" data-page="settings"><span>⚙️</span> Settings</a>
+    </nav>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

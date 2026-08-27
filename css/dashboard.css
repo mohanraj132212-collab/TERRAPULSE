@@ -1,0 +1,166 @@
+/* TerraPulse Main Application Dashboard (Ref Image 3) */
+
+.dashboard-viewport {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+/* Health Gauge Ring Container */
+.health-ring-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.health-gauge-circle {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.health-gauge-circle svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.health-gauge-circle circle {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+
+.gauge-ring-bg {
+  stroke: #e5e7eb;
+}
+
+.gauge-ring-fill {
+  stroke: #16a34a;
+  stroke-dasharray: 440;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.8s ease, stroke 0.4s ease;
+}
+
+.gauge-center-val {
+  position: absolute;
+  font-size: 2.25rem;
+  font-weight: 900;
+  color: #000000;
+}
+
+.gauge-sub-label {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #4b5563;
+  letter-spacing: 0.08em;
+  margin-top: 1rem;
+  text-transform: uppercase;
+}
+
+/* 4 Light Green Parameter Cards Grid (Ref Image 3) */
+.manual-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .manual-inputs-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .manual-inputs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.parameter-card {
+  background-color: #8ce678; /* Vibrant light green from Reference Image 3 */
+  border-radius: 24px;
+  padding: 1.75rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.parameter-card-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #000000;
+  text-align: center;
+}
+
+.parameter-card-input {
+  width: 100%;
+  max-width: 180px;
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  padding: 0.65rem 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #000000;
+  text-align: center;
+  outline: none;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.parameter-card-input:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.3);
+}
+
+/* 3 Condition Badges Row (Ref Image 3) */
+.condition-badges-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.condition-pill {
+  background-color: #8ce678;
+  color: #000000;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding: 0.75rem 3rem;
+  border-radius: 9999px;
+  min-width: 160px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+.condition-pill.active-good {
+  background-color: #16a34a;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(22, 163, 74, 0.4);
+}
+
+.condition-pill.active-bad {
+  background-color: #ef4444;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+}
+
+.condition-pill.active-normal {
+  background-color: #eab308;
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(234, 179, 8, 0.4);
+}
